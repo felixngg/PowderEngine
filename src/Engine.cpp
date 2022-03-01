@@ -5,8 +5,7 @@
 
 using namespace PowderEngine;
 
-Engine::Engine()
-= default;
+Engine::Engine() = default;
 
 Engine::~Engine()
 {
@@ -16,13 +15,13 @@ Engine::~Engine()
 	}
 	_controllableObjects.clear();
 
-	//Destroy window
+	// Destroy window
 	SDL_DestroyRenderer(_sdlRenderer);
 	SDL_DestroyWindow(_sdlWindow);
 	_sdlWindow = nullptr;
 	_sdlRenderer = nullptr;
 
-	//Quit SDL subsystems
+	// Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -35,13 +34,13 @@ bool Engine::init(int width, int height)
 		return false;
 	}
 
-	//Create window
+	// Create window
 	_sdlWindow = SDL_CreateWindow("PowderEngine Test",
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		width,
-		height,
-		SDL_WINDOW_SHOWN);
+								  SDL_WINDOWPOS_UNDEFINED,
+								  SDL_WINDOWPOS_UNDEFINED,
+								  width,
+								  height,
+								  SDL_WINDOW_SHOWN);
 
 	if (_sdlWindow == nullptr)
 	{
@@ -52,7 +51,7 @@ bool Engine::init(int width, int height)
 	{
 		_w = width;
 		_h = height;
-		//Get window surface
+		// Get window surface
 		_sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (_sdlRenderer == nullptr)
 		{
@@ -61,9 +60,9 @@ bool Engine::init(int width, int height)
 		}
 		else
 		{
-			//Initialize renderer color
+			// Initialize renderer color
 			SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			//Initialize PNG loading
+			// Initialize PNG loading
 			int imgFlags = IMG_INIT_PNG;
 			if (!(IMG_Init(imgFlags) & imgFlags))
 			{
@@ -74,7 +73,7 @@ bool Engine::init(int width, int height)
 	}
 
 	std::string path = "Idle.png";
-	addTexture(path,10, {73, 69, 48, 54}, 180);
+	addTexture(path, 10, {73, 69, 48, 54}, 180);
 
 	gameLoop();
 
@@ -84,16 +83,16 @@ bool Engine::init(int width, int height)
 void Engine::gameLoop()
 {
 	SDL_Event e;
-	//While application is running
+	// While application is running
 	while (!_stoppable)
 	{
-		//Handle events on queue
+		// Handle events on queue
 		handleEvent(&e);
 		_render();
 	}
 }
 
-bool Engine::addTexture(std::string& path, int numOfSheet, const SDL_Rect& firstSprite, int space)
+bool Engine::addTexture(std::string &path, int numOfSheet, const SDL_Rect &firstSprite, int space)
 {
 	auto engineTexture = new PowderEngine::ControllableObject({_w / 2, _h / 2}, _sdlRenderer, path);
 
@@ -104,18 +103,18 @@ bool Engine::addTexture(std::string& path, int numOfSheet, const SDL_Rect& first
 
 void Engine::_render()
 {
-	//Clear screen
+	// Clear screen
 	SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(_sdlRenderer);
 
-	//Render _texture to screen
+	// Render _texture to screen
 	_controllableObjects[0]->render(_sdlRenderer);
 
-	//Update screen
+	// Update screen
 	SDL_RenderPresent(_sdlRenderer);
 }
 
-bool Engine::removeTexture(std::string& path)
+bool Engine::removeTexture(std::string &path)
 {
 	/*for(auto texture : _availTexture)
 	{
@@ -128,11 +127,11 @@ bool Engine::removeTexture(std::string& path)
 	return false;
 }
 
-void Engine::handleEvent(SDL_Event* event)
+void Engine::handleEvent(SDL_Event *event)
 {
 	while (SDL_PollEvent(event) != 0)
 	{
-		//User requests quit
+		// User requests quit
 		switch (event->type)
 		{
 		case SDL_QUIT:
@@ -141,7 +140,8 @@ void Engine::handleEvent(SDL_Event* event)
 		case SDL_KEYDOWN:
 		{
 			_controllableObjects[0]->handleEvent(static_cast<SDL_KeyCode>(event->key.keysym.sym));
-		} break;
+		}
+		break;
 		default:
 			break;
 		}

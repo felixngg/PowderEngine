@@ -18,15 +18,15 @@ namespace PowderEngine
 		~Engine();
 
 		bool init(int width = SCREEN_WIDTH, int height = SCREEN_HEIGHT);
-		bool addTexture(std::string& path, int numOfSprite, const SDL_Rect& firstSprite, int space);
-		bool removeTexture(std::string& path);
+		bool addTexture(std::string &path, int numOfSprite, const SDL_Rect &firstSprite, int space);
+		bool removeTexture(std::string &path);
 		void gameLoop();
-		void handleEvent(SDL_Event* event);
+		void handleEvent(SDL_Event *event);
 
 	private:
-		SDL_Window* _sdlWindow{};
-		SDL_Renderer* _sdlRenderer{};
-		std::vector<PowderEngine::ControllableObject*> _controllableObjects;
+		SDL_Window *_sdlWindow{};
+		SDL_Renderer *_sdlRenderer{};
+		std::vector<PowderEngine::ControllableObject *> _controllableObjects;
 		int _w{};
 		int _h{};
 		bool _stoppable{false};
@@ -35,4 +35,4 @@ namespace PowderEngine
 	};
 }
 
-#endif //UNSTOPPABLEGAME_ENGINE_H
+#endif // UNSTOPPABLEGAME_ENGINE_H
